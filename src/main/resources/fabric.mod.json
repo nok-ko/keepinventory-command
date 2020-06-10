@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "keepinventory-command",
+  "version": "${version}",
+  "name": "KeepInventory Command",
+  "description": "Adds the /keepinventory command which allows a per-player version of the gamerule.",
+  "authors": [
+    "WayOfTheQway"
+  ],
+  "contact": {
+    "homepage": "https://wotq.dev/",
+    "sources": "https://github.com/rjb3977/keepinventory-command/"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.wotq.keepinventory.KeepInventoryMod"
+    ]
+  },
+  "mixins": [
+    "mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+  }
+}
