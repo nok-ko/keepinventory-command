@@ -31,8 +31,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
      */
     @Redirect(method = "copyFrom", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$RuleKey;)Z"))
     public boolean onCopyFrom(GameRules rules, GameRules.RuleKey<GameRules.BooleanRule> key, ServerPlayerEntity oldPlayer) {
-        System.out.println("onCopyFrom");
-
         if (key == GameRules.KEEP_INVENTORY) {
             return bridge(oldPlayer).$wotq_getKeepInventory().orElseGet(() -> rules.getBoolean(key));
         } else {

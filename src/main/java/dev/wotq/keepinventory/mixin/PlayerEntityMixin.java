@@ -85,8 +85,6 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
      */
     @Redirect(method = "dropInventory", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$RuleKey;)Z"))
     public boolean onDropInventory(GameRules rules, GameRules.RuleKey<GameRules.BooleanRule> key) {
-        System.out.println("onDropInventory");
-
         if (key == GameRules.KEEP_INVENTORY) {
             return this.$wotq_keepInventory.orElseGet(() -> rules.getBoolean(key));
         } else {
@@ -106,8 +104,6 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
      */
     @Redirect(method = "getCurrentExperience", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$RuleKey;)Z"))
     public boolean onGetCurrentExperience(GameRules rules, GameRules.RuleKey<GameRules.BooleanRule> key) {
-        System.out.println("onGetCurrentExperience");
-
         if (key == GameRules.KEEP_INVENTORY) {
             return this.$wotq_keepInventory.orElseGet(() -> rules.getBoolean(key));
         } else {

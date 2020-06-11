@@ -12,7 +12,6 @@ import net.minecraft.text.LiteralText;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static dev.wotq.keepinventory.bridge.PlayerEntityBridge.bridge;
 import static net.minecraft.command.arguments.EntityArgumentType.getPlayers;
@@ -49,10 +48,6 @@ public class KeepInventoryMod implements ModInitializer {
         Command<ServerCommandSource> others = context -> {
             execute(context.getSource(), getPlayers(context, "targets"), context.getNodes().get(2).getNode());
             return 1;
-        };
-
-        Predicate<ServerCommandSource> permission = source -> {
-            return source.hasPermissionLevel(4);
         };
 
         dispatcher.register(literal("keepinventory")
