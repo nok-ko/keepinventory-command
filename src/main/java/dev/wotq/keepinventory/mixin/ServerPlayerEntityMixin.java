@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,8 +16,8 @@ import static dev.wotq.keepinventory.bridge.PlayerEntityBridge.bridge;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
-    private ServerPlayerEntityMixin(ServerWorld world, GameProfile profile) {
-        super(world, profile);
+    private ServerPlayerEntityMixin(ServerWorld world, BlockPos pos, GameProfile profile) {
+        super(world, pos, profile);
     }
 
     /**
@@ -29,9 +30,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
      *
      * @return $wotq_keepInventory if it is true or false, otherwise the gamerule's value
      */
-    @Redirect(method = "copyFrom", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$RuleKey;)Z"))
-    public boolean onCopyFrom(GameRules rules, GameRules.RuleKey<GameRules.BooleanRule> key, ServerPlayerEntity oldPlayer) {
-        if (key == GameRules.KEEP_INVENTORY) {
+    @Redirect(method = "copyFrom", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$Key;)Z"))
+    public boolean onCopyFrom(GameRules rules, GameRules.Key<GameRules.BooleanRule> key, ServerPlayerEntity oldPlayer) {
+        if (key.getName().equals("keepInventory")) {
             return bridge(oldPlayer).$wotq_getKeepInventory().orElseGet(() -> rules.getBoolean(key));
         } else {
             return rules.getBoolean(key);

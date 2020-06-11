@@ -83,9 +83,9 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
      *
      * @return $wotq_keepInventory if it is true or false, otherwise the gamerule's value
      */
-    @Redirect(method = "dropInventory", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$RuleKey;)Z"))
-    public boolean onDropInventory(GameRules rules, GameRules.RuleKey<GameRules.BooleanRule> key) {
-        if (key == GameRules.KEEP_INVENTORY) {
+    @Redirect(method = "dropInventory", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$Key;)Z"))
+    public boolean onDropInventory(GameRules rules, GameRules.Key<GameRules.BooleanRule> key) {
+        if (key.getName().equals("keepInventory")) {
             return this.$wotq_keepInventory.orElseGet(() -> rules.getBoolean(key));
         } else {
             return rules.getBoolean(key);
@@ -102,9 +102,9 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
      *
      * @return $wotq_keepInventory if it is true or false, otherwise the gamerule's value
      */
-    @Redirect(method = "getCurrentExperience", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$RuleKey;)Z"))
-    public boolean onGetCurrentExperience(GameRules rules, GameRules.RuleKey<GameRules.BooleanRule> key) {
-        if (key == GameRules.KEEP_INVENTORY) {
+    @Redirect(method = "getCurrentExperience", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$Key;)Z"))
+    public boolean onGetCurrentExperience(GameRules rules, GameRules.Key<GameRules.BooleanRule> key) {
+        if (key.getName().equals("keepInventory")) {
             return this.$wotq_keepInventory.orElseGet(() -> rules.getBoolean(key));
         } else {
             return rules.getBoolean(key);
