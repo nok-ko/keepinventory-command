@@ -12,7 +12,7 @@
     "sources": "https://github.com/rjb3977/keepinventory-command/"
   },
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/keepinventory-command/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -20,7 +20,7 @@
     ]
   },
   "mixins": [
-    "mixins.json"
+    "keepinventory.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.4",
