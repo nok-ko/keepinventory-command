@@ -14,8 +14,8 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static dev.wotq.keepinventory.bridge.PlayerEntityBridge.bridge;
-import static net.minecraft.command.arguments.EntityArgumentType.getPlayers;
-import static net.minecraft.command.arguments.EntityArgumentType.players;
+import static net.minecraft.command.argument.EntityArgumentType.getPlayers;
+import static net.minecraft.command.argument.EntityArgumentType.players;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
