@@ -2,7 +2,7 @@ package dev.wotq.keepinventory.mixin;
 
 import dev.wotq.keepinventory.bridge.PlayerEntityBridge;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,7 +40,7 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
     /**
      * Injected at the end of the constructor.
      *
-     * @param callback
+     * @param callback we don't do anything with the callbackinfo here
      */
     @Inject(method = "<init>", at = @At(value = "RETURN"))
     public void onInit(CallbackInfo callback) {
@@ -51,10 +51,10 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
      * Injected at the end of readCustomDataFromTag
      *
      * @param tag tag to read the data from
-     * @param callback
+     * @param callback we don't do anything with the callbackinfo here
      */
-    @Inject(method = "readCustomDataFromTag", at = @At(value = "RETURN"))
-    public void onReadCustomDataFromTag(CompoundTag tag, CallbackInfo callback) {
+    @Inject(method = "readCustomDataFromNbt", at = @At(value = "RETURN"))
+    public void onReadCustomDataFromTag(NbtCompound tag, CallbackInfo callback) {
         if (tag.contains("$wotq_keepInventory")) {
             $wotq_keepInventory = Optional.of(tag.getBoolean("$wotq_keepInventory"));
         } else {
@@ -66,10 +66,10 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
      * Injected at the end of writeCustomDataToTag.
      *
      * @param tag tag to write the data to
-     * @param callback
+     * @param callback we don't do anything with the callbackinfo here
      */
-    @Inject(method = "writeCustomDataToTag", at = @At(value = "RETURN"))
-    public void onWriteCustomDataToTag(CompoundTag tag, CallbackInfo callback) {
+    @Inject(method = "writeCustomDataToNbt", at = @At(value = "RETURN"))
+    public void onWriteCustomDataToTag(NbtCompound tag, CallbackInfo callback) {
         $wotq_keepInventory.ifPresent(value -> tag.putBoolean("$wotq_keepInventory", value));
     }
 
@@ -102,7 +102,7 @@ public class PlayerEntityMixin implements PlayerEntityBridge {
      *
      * @return $wotq_keepInventory if it is true or false, otherwise the gamerule's value
      */
-    @Redirect(method = "getCurrentExperience", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$Key;)Z"))
+    @Redirect(method = "getXpToDrop", at = @At(value = "INVOKE", target = "net/minecraft/world/GameRules.getBoolean(Lnet/minecraft/world/GameRules$Key;)Z"))
     public boolean onGetCurrentExperience(GameRules rules, GameRules.Key<GameRules.BooleanRule> key) {
         if (key.getName().equals("keepInventory")) {
             return this.$wotq_keepInventory.orElseGet(() -> rules.getBoolean(key));

@@ -3,6 +3,7 @@ package dev.wotq.keepinventory;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
+import dev.wotq.keepinventory.bridge.PlayerEntityBridge;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.server.command.ServerCommandSource;
@@ -13,7 +14,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
-import static dev.wotq.keepinventory.bridge.PlayerEntityBridge.bridge;
 import static net.minecraft.command.argument.EntityArgumentType.getPlayers;
 import static net.minecraft.command.argument.EntityArgumentType.players;
 import static net.minecraft.server.command.CommandManager.argument;
@@ -83,7 +83,7 @@ public class KeepInventoryMod implements ModInitializer {
 
         final Optional<Boolean> valueFinal = value;
 
-        players.forEach(player -> bridge(player).$wotq_setKeepInventory(valueFinal));
+        players.forEach(player -> ((PlayerEntityBridge) player).$wotq_setKeepInventory(valueFinal));
 
         if (players.size() == 1) {
             source.sendFeedback(new LiteralText("Set keepInventory to " + valueNode.getName() + " for ").append(players.iterator().next().getDisplayName()), false);
