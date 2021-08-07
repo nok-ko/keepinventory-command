@@ -5,7 +5,8 @@
   "name": "KeepInventory Command",
   "description": "Adds the /keepinventory command which allows a per-player version of the gamerule.",
   "authors": [
-    "WayOfTheQway"
+    "WayOfTheQway",
+    "nokko"
   ],
   "contact": {
     "homepage": "https://wotq.dev/",
